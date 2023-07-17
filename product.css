@@ -1,0 +1,527 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+:root {
+    --main-color: #262626;
+}
+
+html, body {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.mainPage {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: #EEEEEE;
+    overflow: hidden;
+}
+
+.cardForm {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 500px;
+    width: 320px;
+    transition: .5s;
+}
+
+.cardForm:nth-child(1) {
+    z-index: 1;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.cardForm:nth-child(1) .moreBtn {
+    display: none;
+}
+
+.cardForm:nth-child(n + 3) {
+    z-index: 1;
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%) scale(.8);
+    opacity: .5;
+}
+
+.cardForm:nth-child(n + 3) .moreBtn {
+    display: none;
+}
+
+.partCard {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transition: .5s;
+}
+
+.outside {
+    z-index: 2;
+    left: 0;
+    top: 0;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    transform-origin: left;
+}
+
+.outside .front {
+    z-index: 2;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: var(--main-color);
+    box-shadow: 5px 5px 5px #DDDDDD, -5px -5px 5px white;
+    -webkit-backface-visibility: hidden;
+}
+
+.outside .front::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: 50%;
+    background-color: white;
+    /* border-radius: 100% 0% 64% 36% / 53% 100% 0% 47% ; */
+    border-radius: 50% 0 50% 50%;
+}
+
+.front .imgShowcase {
+    position: absolute;
+    height: auto;
+    width: 80%;
+    top: 180px;
+    left: 50%;
+    transform: translateX(-40%) rotate(20deg);
+}
+
+.front .nameProduct {
+    position: absolute;
+    /* background-color: red; */
+    top: 360px;
+    text-align: center;
+    height: fit-content;
+    width: 100%;
+    word-break: keep-all;
+    font-size: 24px;
+    color: white;
+}
+
+.front .moreBtn {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    font-size: 28px;
+    font-weight: bolder;
+    background-color: white;
+    border: none;
+    transform: translateX(-50%);
+    padding: 10px 40px;
+    border-radius: 10px;
+    transition: .5s;
+}
+
+.front .moreBtn:hover {
+    cursor: grab;
+    background-color: var(--main-color);
+    color: white;
+    box-shadow: 3px 3px 5px white;
+    border-top: solid 2px white;
+    border-left: solid 2px white;
+}
+
+.front .moreBtn:active {
+    cursor: grabbing;
+    background-color: black;
+}
+
+.outside .back {
+    z-index: 1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    /* background-color: var(--main-color); */
+    transform: rotateY(180deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-left: solid 2px #DDDDDD;
+    border-top: solid 2px #DDDDDD;
+    border-radius: 10px;
+}
+
+.part {
+    height: auto;
+    bottom: 0;
+    opacity: .3;
+}
+
+.back .funcList {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    height: 50%;
+    width: 100%;
+    background-color: transparent;
+    /* background-color: blue; */
+    padding: 20px;
+    overflow: auto;
+}
+
+.back .funcList::-webkit-scrollbar {
+    width: 10px
+}
+
+.back .funcList::-webkit-scrollbar-track {
+    background-color: #DDDDDD;
+    box-shadow: inset 2px 2px 4px gray;
+}
+
+.back .funcList::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+    border-radius: 10px;
+}
+
+.back.backActive .funcList .func {
+    animation: animateFunc 1s ease calc(var(--i) / 4) forwards alternate;
+    /* animation-delay: var(--i) !important; */
+}
+
+.back.backActive .funcList .func:nth-child(2n + 1) {
+    transform: translateX(-10px) !important;
+}
+
+.back .funcList .func {
+    list-style: none;
+    width: 100%;
+    color: white;
+    line-height: 1.5;
+    font-size: 24px;
+    margin-bottom: 20px;
+    background-color: var(--main-color);
+    padding: 4px 10px;
+    transform: translateX(-100px);
+    opacity: 0;
+    border-radius: 20% 0 20% 0;
+}
+
+.infoBox {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50%;
+    width: 100%;
+    background-color: transparent;
+}
+
+.infoBox .costBox {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    background-color: white;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px gray;
+}
+
+.costBox .productCost {
+    user-select: none;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    transform: translateY(-50%);
+    max-width: 80%;
+    min-width: fit-content;
+    color: white;
+    background-color: #00B050;
+    padding: 10px 30px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px gray;
+}
+
+.costBox .productCountBox {
+    display: flex;
+    align-items: center;
+}
+
+.costBox .productCountBox .controlProductCount {
+    font-size: 18px;
+    height: 20px;
+    width: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 5px 5px 5px gray;
+    transition: .5s;
+}
+
+.costBox .productCountBox .controlProductCount:hover {
+    cursor: grab;
+}
+
+.costBox .productCountBox .controlProductCount:active {
+    cursor: grabbing;
+    transform: scale(.9);
+}
+
+.costBox .productCountBox .addProduct {
+    background-color: #00B050;
+}
+
+.costBox .productCountBox .addProduct:hover {
+    background-color: lime;
+}
+
+.costBox .productCountBox .addProduct:active {
+    background-color: #00B050;
+    box-shadow: 8px 8px 5px gray;
+}
+
+.costBox .productCountBox .productCont--value {
+    outline: none;
+    text-align: center;
+    height: 40px;
+    width: 60px;
+    font-size: 22px;
+    font-weight: bolder;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: inset 5px 5px 5px gray;
+    margin: 0 20px;
+}
+
+.costBox .productCountBox .removeProduct {
+    background-color: #d40202;
+}
+
+.costBox .productCountBox .removeProduct:hover {
+    background-color: red;
+}
+
+.costBox .productCountBox .removeProduct:active {
+    background-color: #d40202;
+    box-shadow: 8px 8px 5px gray;
+}
+
+.costBox .buyBtn {
+    color: white;
+    font-size: 24px;
+    background-color: #00B050;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px gray;
+    transition: .5s;
+}
+
+.costBox .buyBtn:hover {
+    cursor: grab;
+    background-color: lime;
+    box-shadow: 8px 8px 5px gray;
+}
+
+.costBox .buyBtn:active {
+    cursor: grabbing;
+    background-color: #00B050;
+    transform: scale(.9);
+}
+
+.inside {
+    z-index: 1;
+    background-color: var(--main-color);
+    left: 0;
+    top: 0;
+}
+
+.inside::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 50%;
+    width: 100%;
+    background-color: white;
+    border-radius: 0% 100% 0% 100% / 52% 43% 57% 48% ;
+    filter: blur(5px);
+}
+
+.inside .imgMainShowcase {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(30deg);
+    width: 50%;
+    height: auto;
+    transition: .5s;
+}
+
+.inside.insideActive .imgMainShowcase {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(30deg);
+    width: 180%;
+    height: auto;
+    animation: animateProduct 1s ease-in-out infinite alternate;
+    transition: .5s;
+}
+
+
+
+.outside.outsideActive {
+    transform: rotateY(180deg) translateX(120px);
+    width: 120%;
+}
+
+.boardControl {
+    position: absolute;
+    transition: .5s;
+    left: 100%;
+    bottom: 0;
+    
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-left: 100px;
+}
+
+.boardControl.boardActive .closeBtn {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.controlBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    border: none;
+}
+
+.closeBtn {
+    transform: translateX(-200px);
+    opacity: 0;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    margin-top: 40px;
+    transition: .5s;
+}
+
+.closeBtn:hover {
+    cursor: grab;
+    box-shadow: 5px 5px 5px #920000;
+}
+
+.closeBtn:active {
+    cursor: grabbing;
+    box-shadow: inset 5px 5px 5px #920000;
+}
+
+.changeBox {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+}
+
+.changeBtn {
+    font-size: 24px;
+    font-weight: bolder;
+    color: white;
+    border: none;
+    padding: 10px 40px;
+    border-radius: 10px;
+}
+
+.prev {
+    background-color: #e20000;
+    box-shadow: 0 15px 0 #c00000,
+                0 20px 0 10px white,
+                0 30px 0 10px #DDDDDD;
+}
+
+.prev:hover {
+    cursor: grab;
+}
+
+.prev:active {
+    background-color: red;
+    cursor: grabbing;
+    box-shadow: 0 5px 0 10px white,
+                0 15px 0 10px #DDDDDD;
+    transform: translateY(15px);
+}
+
+.next {
+    margin-left: 50px;
+    background-color: #00d100;
+    box-shadow: 0 15px 0 #009b00,
+                0 20px 0 10px white,
+                0 30px 0 10px #DDDDDD;
+}
+
+.next:hover {
+    cursor: grab;
+}
+
+.next:active {
+    background-color: lime;
+    cursor: grabbing;
+    box-shadow: 0 5px 0 10px white,
+                0 15px 0 10px #DDDDDD;
+    transform: translateY(15px);
+}
+
+/* ANIMATION */
+@keyframes animateProduct {
+    to {
+        transform: translate(-50%, -60%) rotate(30deg);
+    }
+}
+
+@keyframes animateList {
+    to {
+        transform: translateY(10px) rotateY(180deg);
+    }
+}
+
+@keyframes animateFunc {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        transform: translate(0);
+        opacity: 1;
+    }
+}
